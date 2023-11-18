@@ -1,0 +1,15 @@
+[package]
+name = "images-to-video"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "images_to_video"
+path = "src/lib.rs"
+
+[[bin]]
+name = "stich_images"
+path = "src/bin/main.rs"
+
+[dependencies]
+async-std = "1.12.0"
