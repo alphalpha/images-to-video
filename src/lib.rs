@@ -58,6 +58,16 @@ pub struct Config {
     codec: Codec,
 }
 
+impl Config {
+    pub fn set_codec(&mut self, codec: Codec) {
+        self.codec = codec;
+    }
+
+    pub fn codec(&mut self) -> &Codec {
+        &self.codec
+    }
+}
+
 impl Default for Config {
     fn default() -> Self {
         Self {
