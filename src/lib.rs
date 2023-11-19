@@ -3,7 +3,7 @@ use crate::utils::Error;
 use std::path::PathBuf;
 use std::process::Command;
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub enum Codec {
     ProRes,
     H264,
@@ -49,6 +49,7 @@ pub fn build_config(
     })
 }
 
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct Config {
     ffmpeg_path: PathBuf,
     images_path: PathBuf,
