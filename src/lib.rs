@@ -31,6 +31,7 @@ impl Codec {
 pub fn build_config(
     ffmpeg_path_str: &str,
     images_path_str: &str,
+    output_file_name_str: &str,
     frame_rate: u32,
     codec: Codec,
 ) -> Result<Config, Error> {
@@ -44,7 +45,7 @@ pub fn build_config(
         std::fs::create_dir(&output_dir)
             .map_err(|_| Error::Custom(format!("{} already exists.", output_dir.display())))?;
     }
-    let output_path = output_dir.join("Video.mov");
+    let output_path = output_dir.join(output_file_name_str);
     Ok(Config {
         ffmpeg_path: ffmpeg_path,
         images_path: image_paths,
