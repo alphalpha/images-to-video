@@ -31,6 +31,7 @@ impl Codec {
 pub fn build_config(
     ffmpeg_path_str: &str,
     images_path_str: &str,
+    output_path_opt: Option<PathBuf>,
     output_file_name_str: &str,
     frame_rate: u32,
     codec: Codec,
@@ -40,11 +41,16 @@ pub fn build_config(
     }
     let ffmpeg_path = utils::ffmpeg_path(ffmpeg_path_str)?;
     let (images_path, image_paths) = utils::images_path(images_path_str)?;
-    let output_dir = images_path.join(std::path::Path::new("Video"));
-    if !output_dir.exists() {
-        std::fs::create_dir(&output_dir)
-            .map_err(|_| Error::Custom(format!("{} already exists.", output_dir.display())))?;
-    }
+    let output_dir = if let Some(output_path) = output_path_opt {
+        PathBuf::from(output_path)
+    } else {
+        let output_dir = images_path.join(std::path::Path::new("Video"));
+        if !output_dir.exists() {
+            std::fs::create_dir(&output_dir)
+                .map_err(|_| Error::Custom(format!("{} already exists.", output_dir.display())))?;
+        }
+        output_dir
+    };
     let output_path = output_dir.join(output_file_name_str);
     Ok(Config {
         ffmpeg_path: ffmpeg_path,
